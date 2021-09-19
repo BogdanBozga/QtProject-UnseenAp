@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ItemAppendWindow</class>
+ <widget class="QWidget" name="ItemAppendWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>871</width>
+    <height>713</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="big_widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>80</y>
+     <width>461</width>
+     <height>481</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>250</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget{
+}</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="photo_special">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>160</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>160</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QWidget{
+	
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="photo_type_selected">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QWidget{
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Next release data:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDateEdit" name="dateEdit"/>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="radioButton_layout"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="episode_data_layout">
+      <item>
+       <layout class="QVBoxLayout" name="text_info_ep">
+        <item>
+         <widget class="QLabel" name="label_ep_t">
+          <property name="text">
+           <string>Number total of episodes</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_ep">
+          <property name="text">
+           <string>Last episode</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QWidget" name="number_data_ep" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QSpinBox" name="total_ep"/>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="last_ep"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QTextEdit" name="name_text">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>1000</width>
+          <height>1000</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="cancel_button">
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="save_button">
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1125</width>
+    <height>528</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>180</y>
+     <width>344</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>100</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>100</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget{
+background:blue;
+}</string>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLabel" name="label_special_image">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextBrowser" name="textBrowser"/>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label_type_image">
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>60</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="lcdNumber"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
