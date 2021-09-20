@@ -26,16 +26,7 @@ public:
 
 public slots:
     void radioButtonChange();
-
-
-signals:
-    void clicked();
-
-private slots:
-
-
     void on_save_button_released();
-
 private:
 
     Ui::ItemAppendWindow *ui;
@@ -49,7 +40,7 @@ private:
 
     QPixmap animeTypeImage;
     QPixmap mangaTypeImage;
-    QPixmap image;
+    QPixmap specialImage;
 };
 
 #endif // ITEMAPPENDWINDOW_H

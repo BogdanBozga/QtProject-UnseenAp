@@ -18,7 +18,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void addRWidget();
-    void addItem(ItemWindow);
+//    void addItem(ItemWindow);
 private slots:
     void on_pushButton_clicked();
 
@@ -28,10 +28,10 @@ protected:
 private:
 
 
-
+    ItemAppendWindow rWindow;
 
     bool rightWindowActive = false;
-    bool leftWindowActive = false;
+//    bool leftWindowActive = false;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

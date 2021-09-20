@@ -19,16 +19,16 @@ void MainWindow::addRWidget()
 
 {   if(!rightWindowActive){
         rightWindowActive = true;
-        ItemAppendWindow rWindow;
         ui->widget_right->layout()->addWidget(rWindow.getWidget());
     }
+    //ui->widget_left->widget()->setVisible(false);
 }
 
-void MainWindow::addItem(ItemWindow item)
-{
-    //items.append(item);
+//void MainWindow::addItem(ItemWindow item)
+//{
+//    items.append(item);
 
-}
+//}
 
 void MainWindow::on_pushButton_clicked()
 {

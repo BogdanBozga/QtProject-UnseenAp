@@ -2,7 +2,6 @@
 #define ITEMWINDOW_H
 
 #include <QWidget>
-#include <QVBoxLayout>
 
 namespace Ui {
 class ItemWindow;
