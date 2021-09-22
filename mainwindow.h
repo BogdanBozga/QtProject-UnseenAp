@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDate>
 
 #include "itemappendwindow.h"
 #include "itemwindow.h"
@@ -18,18 +19,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void addRWidget();
-//    void addItem(ItemWindow);
+    QVector<QWidget*> items;
+
 private slots:
     void on_pushButton_clicked();
-
-protected:
-    QVector<ItemWindow> items;
+    void addItem();
 
 private:
-
-
     ItemAppendWindow rWindow;
-
     bool rightWindowActive = false;
 //    bool leftWindowActive = false;
     Ui::MainWindow *ui;

@@ -6,6 +6,9 @@
 #include <QRadioButton>
 #include <QMessageBox>
 #include <QButtonGroup>
+
+#include "itemwindow.h"
+
 namespace Ui {
 class ItemAppendWindow;
 }
@@ -17,23 +20,26 @@ class ItemAppendWindow : public QWidget
 public:
     explicit ItemAppendWindow(QWidget *parent = nullptr);
     ~ItemAppendWindow();
-
+    QWidget *item;
     QWidget* getWidget();
     static bool active;
     QRadioButton *animeRButton;
     QRadioButton *mangaRButton;
     QButtonGroup *radioButtons;
+signals:
+    void save_done();
 
 public slots:
     void radioButtonChange();
     void on_save_button_released();
+
 private:
 
     Ui::ItemAppendWindow *ui;
     QString mangaTypeLocation = "/home/bozga/Desktop/qt projects/UnseenEp/Image/DefaultImage/manga.png";
     QString animeTypeLocation = "/home/bozga/Desktop/qt projects/UnseenEp/Image/DefaultImage/anime.png";
     QString defaultImageLocation="/home/bozga/Desktop/qt projects/UnseenEp/Image/DefaultImage/emptyImage.jpg";
-
+    QWidget* getItem();
 
 
 

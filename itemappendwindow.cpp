@@ -1,7 +1,7 @@
 ﻿#include "itemappendwindow.h"
 #include "ui_itemappendwindow.h"
 #include "mainwindow.h"
-#include "itemwindow.h"
+
 
 
 ItemAppendWindow::ItemAppendWindow(QWidget *parent) :
@@ -9,7 +9,6 @@ ItemAppendWindow::ItemAppendWindow(QWidget *parent) :
     ui(new Ui::ItemAppendWindow)
 {
     ui->setupUi(this);
-
 
     QPixmap animeImage(animeTypeLocation);
     QPixmap mangaImage(mangaTypeLocation);
@@ -26,37 +25,10 @@ ItemAppendWindow::ItemAppendWindow(QWidget *parent) :
 
     ui->photo_type_selected->setPixmap(animeTypeImage);
     ui->photo_special->setPixmap(specialImage);
-//    animeRButton = new QRadioButton("Anime",this);
-//    mangaRButton = new QRadioButton("Manga",this);
-//    animeRButton->setChecked(true);
-
-//    QButtonGroup *radioButtons= new QButtonGroup();
-//    radioButtons->addButton(animeRButton);
-//    radioButtons->addButton(mangaRButton);
-//    //ui->radioButton_layout->addLayout(qobject_cast<QLayout*>(radioButtons));
-//    ui->radioButton_layout->addWidget(animeRButton);
-//    ui->radioButton_layout->addWidget(mangaRButton);
-
-//    QMessageBox msgBox;
-//    msgBox.setText("The document has been modified.");
-//    msgBox.exec();
-
-//    QObject::connect(animeRButton, &QRadioButton::toggled, this, &ItemAppendWindow::radioButtonChange);
-   // QObject::connect(mangaRButton, &QRadioButton::toggled, this, &ItemAppendWindow::radioButtonChange);
 
     ui->radioButton_anime->setChecked(true);
     QObject::connect(ui->radioButton_anime,&QRadioButton::toggled,this, &ItemAppendWindow::radioButtonChange);
-    //QObject::connect(ui->radioButton_manga,&QRadioButton::clicked,this, &ItemAppendWindow::radioButtonChange);
 
-    //QObject::connect(animeRButton, &ItemAppendWindow::toggled, this, &ItemAppendWindow::radioButtonChange);
-//    connect(radioButtons,&QButtonGroup::buttonToggled,
-//        this, &ItemAppendWindow::radioButtonChange);
-
-//    connect(animeRButton,&QRadioButton::toggled,
-//        this, &ItemAppendWindow::radioButtonChange);
-
-//    connect(mangaRButton,&QRadioButton::toggled,
-//        this, &ItemAppendWindow::radioButtonChange);
 }
 
 ItemAppendWindow::~ItemAppendWindow()
@@ -71,10 +43,6 @@ QWidget* ItemAppendWindow::getWidget()
     return widget;
 }
 
-//ItemAppendWindow::ItemAppendWindow(const ItemAppendWindow &cWindow)
-//{
-//    ui->setupUi(cWindow.ui->big_widget);
-//}
 
 void ItemAppendWindow::radioButtonChange()
 {
@@ -86,11 +54,15 @@ void ItemAppendWindow::radioButtonChange()
 
 void ItemAppendWindow::on_save_button_released()
 {
-    QMessageBox msgBox;
-    msgBox.setText("The document has been modified.");
-    msgBox.exec();
-//    QString name = qobject_cast<QString>(ui->name_text);
-//    QPixmap type = ui->photo_type_selected->grab();
-//    QPixmap specialPhoto = ui->photo_special->grab();
-//    //ItemWindow item(name,type,specialPhoto);
+    QString name = ui->name_text->displayText();
+    QPixmap type = ui->photo_type_selected->grab();
+    QPixmap specialPhoto = ui->photo_special->grab();
+    ItemWindow nitem(name,type,specialPhoto);
+    item = nitem.getLayout();
+    emit save_done();
+}
+
+QWidget* ItemAppendWindow::getItem()
+{
+    return item;
 }

@@ -27,6 +27,6 @@ ItemWindow::~ItemWindow()
 
 QWidget* ItemWindow::getLayout()
 {
-    QWidget *layout= qobject_cast<QWidget*>(ui->widget_item);
+    QWidget* layout= ui->widget_item;
     return layout;
 }
