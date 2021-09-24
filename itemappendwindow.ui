@@ -94,7 +94,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QDateEdit" name="dateEdit"/>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QTimeEdit" name="time"/>
+        </item>
+        <item>
+         <widget class="QDateEdit" name="date"/>
+        </item>
+       </layout>
       </item>
       <item>
        <layout class="QVBoxLayout" name="radioButton_layout">
@@ -130,7 +137,7 @@
         <item>
          <widget class="QLabel" name="label_ep_t">
           <property name="text">
-           <string>Number total of episodes</string>
+           <string>Total number of episodes</string>
           </property>
          </widget>
         </item>
@@ -169,7 +176,7 @@
       <item>
        <widget class="QPushButton" name="cancel_button">
         <property name="text">
-         <string>Cancel</string>
+         <string>Close</string>
         </property>
        </widget>
       </item>

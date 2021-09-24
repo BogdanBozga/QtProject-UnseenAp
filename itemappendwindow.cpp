@@ -1,5 +1,5 @@
-﻿#include "itemappendwindow.h"
-#include "ui_itemappendwindow.h"
+﻿#include "ui_itemappendwindow.h"
+#include "itemappendwindow.h"
 #include "mainwindow.h"
 
 
@@ -25,8 +25,9 @@ ItemAppendWindow::ItemAppendWindow(QWidget *parent) :
 
     ui->photo_type_selected->setPixmap(animeTypeImage);
     ui->photo_special->setPixmap(specialImage);
-
+    ui->date->setDate(QDate::currentDate());
     ui->radioButton_anime->setChecked(true);
+
     QObject::connect(ui->radioButton_anime,&QRadioButton::toggled,this, &ItemAppendWindow::radioButtonChange);
 
 }
@@ -57,8 +58,15 @@ void ItemAppendWindow::on_save_button_released()
     QString name = ui->name_text->displayText();
     QPixmap type = ui->photo_type_selected->grab();
     QPixmap specialPhoto = ui->photo_special->grab();
-    ItemWindow nitem(name,type,specialPhoto);
-    item = nitem.getLayout();
+    int cEp = ui->last_ep->value();
+//    int mEp = qobject_cast<int>(ui->total_ep);
+    int mEp = ui->total_ep->value();
+   // QDate date = qobject_cast<QDate>(ui->date);
+    QDate date = QDate::currentDate();
+    //QTime time = qobject_cast<QTime>(ui->time);
+    QTime time = QTime::currentTime();
+    ItemWindow nitem(name,type,specialPhoto,cEp,mEp,date,time);
+    item = &nitem;
     emit save_done();
 }
 
@@ -66,3 +74,9 @@ QWidget* ItemAppendWindow::getItem()
 {
     return item;
 }
+
+void ItemAppendWindow::on_cancel_button_clicked()
+{
+   emit close_signel();
+}
+

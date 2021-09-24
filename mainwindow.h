@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QDate>
+#include <QApplication>
 
 #include "itemappendwindow.h"
 #include "itemwindow.h"
@@ -19,15 +20,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void addRWidget();
-    QVector<QWidget*> items;
-
+    void removeRWidget();
+    QVector<ItemWindow*> items;
+    bool rightWindowActive;
 private slots:
     void on_pushButton_clicked();
     void addItem();
 
 private:
     ItemAppendWindow rWindow;
-    bool rightWindowActive = false;
+
 //    bool leftWindowActive = false;
     Ui::MainWindow *ui;
 };

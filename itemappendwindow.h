@@ -20,7 +20,7 @@ class ItemAppendWindow : public QWidget
 public:
     explicit ItemAppendWindow(QWidget *parent = nullptr);
     ~ItemAppendWindow();
-    QWidget *item;
+    ItemWindow *item;
     QWidget* getWidget();
     static bool active;
     QRadioButton *animeRButton;
@@ -28,10 +28,14 @@ public:
     QButtonGroup *radioButtons;
 signals:
     void save_done();
+    void close_signel();
 
 public slots:
     void radioButtonChange();
     void on_save_button_released();
+
+private slots:
+    void on_cancel_button_clicked();
 
 private:
 
