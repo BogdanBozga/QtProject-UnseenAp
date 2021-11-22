@@ -14,9 +14,9 @@ class ItemWindow : public QWidget
     Q_OBJECT
 
 public:
-     ItemWindow(QString name, QString typePhotoName, QString specialPhotoName, QPixmap photoType,QPixmap photoSpecial,int cEp,int maxEp,QDate nextRelease,QTime time,int nrUnseeEps=0);
+     ItemWindow(QString name, QString typePhotoName, QString specialPhotoName, int cEp,int maxEp,QDate nextRelease,QTime time,int nrUnseeEps=0);
     ~ItemWindow();
-
+    ItemWindow();
      ItemWindow(ItemWindow &citem);
     QWidget* getLayout();
     void verifyNumber();

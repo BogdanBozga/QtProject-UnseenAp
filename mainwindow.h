@@ -13,6 +13,7 @@
 #include <QCborValue>
 #include "itemappendwindow.h"
 #include "itemwindow.h"
+#include <QCloseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,14 +28,18 @@ public:
     ~MainWindow();
     void addRWidget();
     void removeRWidget();
-    QVector<ItemWindow*> items;
+    QList<ItemWindow*> items;
     bool rightWindowActive;
     bool writeAllItems();
     bool readAllItems();
     void addItem();
+    void writeItem(ItemWindow *item);
+    static void appendItem(ItemWindow item);
+//    static void addItem(ItemWindow item);
     ItemAppendWindow rWindow;
     Ui::MainWindow *ui;
-
+    //    void closeEvent (QCloseEvent *event) override;
+    void fuck(ItemWindow item);
 private slots:
     void on_pushButton_clicked();
 private:

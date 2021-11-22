@@ -1,7 +1,7 @@
 ﻿#include "ui_itemappendwindow.h"
 #include "itemappendwindow.h"
 #include "mainwindow.h"
-#include "clickablelabel.h"
+//#include "clickablelabel.h"
 
 
 
@@ -10,6 +10,9 @@ ItemAppendWindow::ItemAppendWindow(QWidget *parent) :
     ui(new Ui::ItemAppendWindow)
 {
     ui->setupUi(this);
+
+    typeImegeLocation = animeTypeLocation;
+    specialImageLocation = defaultImageLocation;
 
     QPixmap animeImage(animeTypeLocation);
     QPixmap mangaImage(mangaTypeLocation);
@@ -62,21 +65,24 @@ void ItemAppendWindow::radioButtonChange()
 void ItemAppendWindow::on_save_button_released()
 {
     QString name = ui->name_text->text();
-    QPixmap type = ui->photo_type_selected->grab();
-    QPixmap specialPhoto = ui->photo_special->grab();
     int cEp = ui->last_ep->value();
     int mEp = ui->total_ep->value();
     QDate date = ui->date->date();
     QTime time = ui->time->time();
-    ItemWindow nitem(name,typeImegeLocation, specialImageLocation, type,specialPhoto, cEp, mEp, date, time);
+    ItemWindow nitem(name,typeImegeLocation, specialImageLocation, cEp, mEp, date, time);
+
+    nitem.verifyNumber();
     item = &nitem;
+//    MainWindow::items.append(nitem);
+
+//    MainWindow::items.append(ItemWindow(name,typeImegeLocation, specialImageLocation, cEp, mEp, date, time));
     emit save_done();
 }
 
-QWidget* ItemAppendWindow::getItem()
-{
-    return item;
-}
+//QWidget* ItemAppendWindow::getItem()
+//{
+//    return item;
+//}
 
 void ItemAppendWindow::on_cancel_button_clicked()
 {

@@ -30,16 +30,16 @@ void MainWindow::addRWidget()
     }
 }
 
+
 void MainWindow::addItem()
 {
     ItemWindow *item = rWindow.item;
-    item->verifyNumber();
     items.append(item);
     ui->item_place->insertWidget(0,item->getLayout());
     update();
-
-    writeAllItems();
+    writeItem(item);
 }
+
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -54,6 +54,53 @@ void MainWindow::removeRWidget(){
     rightWindowActive= false;
 }
 
+
+void MainWindow::writeItem(ItemWindow *item){
+
+    QFile saveFileR(QStringLiteral("save.json"));
+
+    if (!saveFileR.open(QIODevice::ReadOnly))
+        qWarning("Couldn't open save file.");
+
+    QByteArray saveData = saveFileR.readAll();
+    QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+
+    QJsonObject loadData = loadDoc.object();
+
+    QJsonArray itemsArray;
+
+    QJsonObject itemObject;
+    itemObject["name"] = item->getName();
+    itemObject["specialPhoto"] = item->getSpecialPhotoName();
+    itemObject["typePhoto"] = item->getTypePhotoName();
+    itemObject["nextReleaseDate"] = item->getNextRelease().toString();
+    itemObject["releaseTime"] = item->getNextTime().toString();
+    itemObject["nrTotalEps"] = item->getMaxEp();
+    itemObject["nrCurentEp"] = item->getCEp();
+    itemObject["nrUnseeEps"] = item->getUnseenNumber();
+    itemsArray.append(itemObject);
+
+    if (loadData.contains("items") && loadData["items"].isArray()) {
+    QJsonArray data = loadData["items"].toArray();
+    for (int levelIndex = 0; levelIndex < data.size(); ++levelIndex) {
+        QJsonObject itemData = data[levelIndex].toObject();
+        itemsArray.append(itemData);
+    }
+    }
+    saveFileR.close();
+    QFile saveFileW(QStringLiteral("save.json"));
+    if (!saveFileW.open(QIODevice::WriteOnly))
+        qWarning("Couldn't open save file.");
+
+
+    QJsonObject jsonData;
+    jsonData["items"] = itemsArray;
+    saveFileW.write(QJsonDocument(jsonData).toJson());
+
+
+}
+
+
 bool MainWindow::writeAllItems()
 {
     QFile saveFile(QStringLiteral("save.json"));
@@ -65,9 +112,8 @@ bool MainWindow::writeAllItems()
     QJsonObject jsonData;
 
     QJsonArray itemsArray;
-    for (const ItemWindow *item : items) {
+    for (ItemWindow *item : items) {
         QJsonObject itemObject;
-        qWarning() << item->getName();
         itemObject["name"] = item->getName();
         itemObject["specialPhoto"] = item->getSpecialPhotoName();
         itemObject["typePhoto"] = item->getTypePhotoName();
@@ -75,7 +121,7 @@ bool MainWindow::writeAllItems()
         itemObject["releaseTime"] = item->getNextTime().toString();
         itemObject["nrTotalEps"] = item->getMaxEp();
         itemObject["nrCurentEp"] = item->getCEp();
-        itemObject["nrUnseeEps"] = item -> getUnseenNumber();
+        itemObject["nrUnseeEps"] = item->getUnseenNumber();
         itemsArray.append(itemObject);
     }
 
@@ -101,21 +147,19 @@ bool MainWindow::readAllItems()
     QJsonObject loadData = loadDoc.object();
     if (loadData.contains("items") && loadData["items"].isArray()) {
         qWarning() << "Read data";
-        items.clear();
-        QJsonArray levelArray = loadData["items"].toArray();
+//        items.clear();
+        QJsonArray itemArray = loadData["items"].toArray();
         QString name;
         QString typePhotoLocation;
         QString specialPhotoLocation;
-        QPixmap photoType;
-        QPixmap photoSpecial;
         int cEp=0;
         int maxEp=0;
         int nrUnseeEps=0;
         QDate nextRelease;
         QTime time;
 
-        for (int levelIndex = 0; levelIndex < levelArray.size(); ++levelIndex) {
-            QJsonObject itemData = levelArray[levelIndex].toObject();
+        for (int levelIndex = 0; levelIndex < itemArray.size(); ++levelIndex) {
+            QJsonObject itemData = itemArray[levelIndex].toObject();
 
             if (itemData.contains("name") && itemData["name"].isString()){
                 name = itemData["name"].toString();
@@ -123,12 +167,10 @@ bool MainWindow::readAllItems()
 
             if (itemData.contains("specialPhoto") && itemData["specialPhoto"].isString()){
                 specialPhotoLocation = itemData["specialPhoto"].toString();
-                photoSpecial = QPixmap(specialPhotoLocation);
             }
 
             if (itemData.contains("typePhoto") && itemData["typePhoto"].isString()){
                 typePhotoLocation = itemData["typePhoto"].toString();
-                photoType = QPixmap(typePhotoLocation);
             }
 
             if (itemData.contains("nextReleaseDate") && itemData["nextReleaseDate"].isString()){
@@ -149,13 +191,12 @@ bool MainWindow::readAllItems()
             if (itemData.contains("nrUnseeEps") && itemData["nrUnseeEps"].isDouble()){
                 nrUnseeEps = itemData["nrUnseeEps"].toInt();
             }
-            qWarning() << "here";
-            ItemWindow *item = new ItemWindow(name,typePhotoLocation,specialPhotoLocation,photoType,photoSpecial,cEp,maxEp,nextRelease,time,nrUnseeEps);
-            item->verifyNumber();
-            items.push_back(item);
-            ui->item_place->insertWidget(0,item->getLayout());
-            update();
 
+            ItemWindow item(name,typePhotoLocation,specialPhotoLocation,cEp,maxEp,nextRelease,time,nrUnseeEps);
+            item.verifyNumber();
+            items.append(&item);
+            ui->item_place->insertWidget(0,item.getLayout());
+            update();
         }
 
     }else{

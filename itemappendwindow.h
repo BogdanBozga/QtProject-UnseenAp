@@ -25,8 +25,6 @@ public:
     ~ItemAppendWindow();
     bool CopyImage(const QString& sourceFile, const QString& destinationDir);
 
-
-
     ItemWindow *item;
     QWidget* getWidget();
     static bool active;
@@ -55,8 +53,6 @@ private:
 
     QString typeImegeLocation;
     QString specialImageLocation;
-
-
 
 
     QWidget* getItem();

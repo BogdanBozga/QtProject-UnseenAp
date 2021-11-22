@@ -4,7 +4,7 @@
 #include <QMessageBox>
 #include <QTextStream>
 
-ItemWindow::ItemWindow(QString name, QString typePhotoName, QString specialPhotoName, QPixmap photoType,QPixmap photoSpecial,int cEp,int maxEp,QDate nextRelease,QTime time,int nrUnseeEps) :
+ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialPhotoLocation,int cEp,int maxEp,QDate nextRelease,QTime time,int nrUnseeEps) :
     ui(new Ui::ItemWindow)
 {
 
@@ -20,6 +20,10 @@ ItemWindow::ItemWindow(QString name, QString typePhotoName, QString specialPhoto
     ui->lcdNumber->display(0);
     ui->lcdNumber->setDigitCount(2);
 
+    QPixmap photoType = QPixmap(typePhotoLocation);
+    QPixmap photoSpecial = QPixmap(specialPhotoLocation);
+
+
     ui->label_special_image->setPixmap(photoSpecial.scaled(ui->label_special_image->width(),ui->label_special_image->height(),Qt::IgnoreAspectRatio));
     ui->label_type_image->setPixmap(photoType.scaled(ui->label_type_image->width(),ui->label_type_image->height(),Qt::KeepAspectRatioByExpanding));
 
@@ -29,11 +33,23 @@ ItemWindow::ItemWindow(QString name, QString typePhotoName, QString specialPhoto
     this->maxEp = maxEp;
     this->nextRelease = nextRelease;
     this->nextTime = time;
-    this->typePhotoName = typePhotoName;
-    this->specialPhotoName = specialPhotoName;
+    this->typePhotoName = typePhotoLocation;
+    this->specialPhotoName = specialPhotoLocation;
     this->unseenNumber = nrUnseeEps;
 
     ui->lcdNumber->display(unseenNumber);
+}
+
+ItemWindow::ItemWindow(ItemWindow &citem)
+{
+    this->name=citem.name;
+    this->cEp=citem.cEp;
+    this->maxEp=citem.maxEp;
+    this->nextRelease=citem.nextRelease;
+    this->nextTime=citem.nextTime;
+    this->typePhotoName=citem.typePhotoName;
+    this->specialPhotoName=citem.specialPhotoName;
+    this->unseenNumber=citem.unseenNumber;
 }
 
 
@@ -55,10 +71,8 @@ void ItemWindow::verifyNumber()
         if(cEp+unseenNumber >= maxEp)
             break;
         unseenNumber++;
-
     }
-
-    ui->lcdNumber->display(unseenNumber);
+//    ui->lcdNumber->display(unseenNumber);
 }
 
 int ItemWindow::getCEp() const
