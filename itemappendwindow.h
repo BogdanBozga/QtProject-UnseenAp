@@ -6,6 +6,9 @@
 #include <QRadioButton>
 #include <QMessageBox>
 #include <QButtonGroup>
+#include <QFileDialog>
+#include <QSysInfo>
+#include <QDir>
 
 #include "itemwindow.h"
 
@@ -20,6 +23,10 @@ class ItemAppendWindow : public QWidget
 public:
     explicit ItemAppendWindow(QWidget *parent = nullptr);
     ~ItemAppendWindow();
+    bool CopyImage(const QString& sourceFile, const QString& destinationDir);
+
+
+
     ItemWindow *item;
     QWidget* getWidget();
     static bool active;
@@ -36,18 +43,23 @@ public slots:
 
 private slots:
     void on_cancel_button_clicked();
+    void on_pushButton_clicked();
 
 private:
 
     Ui::ItemAppendWindow *ui;
-    QString mangaTypeLocation = "/home/bozga/Desktop/qt projects/UnseenEp/Image/DefaultImage/manga.png";
-    QString animeTypeLocation = "/home/bozga/Desktop/qt projects/UnseenEp/Image/DefaultImage/anime.png";
-    QString defaultImageLocation="/home/bozga/Desktop/qt projects/UnseenEp/Image/DefaultImage/emptyImage.jpg";
+    QString mangaTypeLocation = ":/image/Image/DefaultImage/manga.png";
+    QString animeTypeLocation = ":/image/Image/DefaultImage/anime.png";
+    QString defaultImageLocation=":/image/Image/DefaultImage/emptyImage.jpg";
+    QString imageResourseLocation = "/home/bozga/PersonalProjects/QtProjects/UnseenEp/Image/SpecialImage/";
+
+    QString typeImegeLocation;
+    QString specialImageLocation;
+
+
+
+
     QWidget* getItem();
-
-
-
-
     QPixmap animeTypeImage;
     QPixmap mangaTypeImage;
     QPixmap specialImage;

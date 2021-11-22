@@ -14,10 +14,34 @@ class ItemWindow : public QWidget
     Q_OBJECT
 
 public:
-     ItemWindow(QString name, QPixmap photoType,QPixmap photoSpecial,int cEp,int maxEp,QDate nextRelease,QTime time);
+     ItemWindow(QString name, QString typePhotoName, QString specialPhotoName, QPixmap photoType,QPixmap photoSpecial,int cEp,int maxEp,QDate nextRelease,QTime time,int nrUnseeEps=0);
     ~ItemWindow();
+
+     ItemWindow(ItemWindow &citem);
     QWidget* getLayout();
     void verifyNumber();
+
+
+
+
+
+    int getCEp() const;
+    void setCEp(int newCEp);
+    int getMaxEp() const;
+    void setMaxEp(int newMaxEp);
+    int getUnseenNumber() const;
+    void setUnseenNumber(int newUnseenNumber);
+    const QDate &getNextRelease() const;
+    void setNextRelease(const QDate &newNextRelease);
+    const QTime &getNextTime() const;
+    void setNextTime(const QTime &newNextTime);
+    const QString &getName() const;
+    void setName(const QString &newName);
+
+    const QString &getTypePhotoName() const;
+    const QString &getSpecialPhotoName() const;
+
+
 
 private:
     int cEp= 0;
@@ -26,6 +50,9 @@ private:
     QDate nextRelease;
     QTime nextTime;
     Ui::ItemWindow *ui;
+    QString name;
+    QString typePhotoName;
+    QString specialPhotoName;
 
 };
 

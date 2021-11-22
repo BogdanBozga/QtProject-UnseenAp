@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>Image/DefaultImage/emptyImage.jpg</file>
+        <file>Image/DefaultImage/anime.png</file>
+        <file>Image/DefaultImage/manga.png</file>
+    </qresource>
+</RCC>

@@ -4,7 +4,13 @@
 #include <QMainWindow>
 #include <QDate>
 #include <QApplication>
-
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QTextStream>
+#include <QFile>
+#include <QCborMap>
+#include <QCborValue>
 #include "itemappendwindow.h"
 #include "itemwindow.h"
 
@@ -23,14 +29,15 @@ public:
     void removeRWidget();
     QVector<ItemWindow*> items;
     bool rightWindowActive;
+    bool writeAllItems();
+    bool readAllItems();
+    void addItem();
+    ItemAppendWindow rWindow;
+    Ui::MainWindow *ui;
+
 private slots:
     void on_pushButton_clicked();
-    void addItem();
-
 private:
-    ItemAppendWindow rWindow;
 
-//    bool leftWindowActive = false;
-    Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
