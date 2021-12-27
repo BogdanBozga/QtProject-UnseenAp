@@ -55,7 +55,7 @@ private:
     QString specialImageLocation;
 
 
-    QWidget* getItem();
+//    QWidget* getItem();
     QPixmap animeTypeImage;
     QPixmap mangaTypeImage;
     QPixmap specialImage;

@@ -3,7 +3,9 @@
 
 #include <QWidget>
 #include <QDate>
+#include <QPushButton>
 #include <QTime>
+#include "infowindow.h"
 
 namespace Ui {
 class ItemWindow;
@@ -16,15 +18,17 @@ class ItemWindow : public QWidget
 public:
      ItemWindow(QString name, QString typePhotoName, QString specialPhotoName, int cEp,int maxEp,QDate nextRelease,QTime time,int nrUnseeEps=0);
     ~ItemWindow();
-    ItemWindow();
      ItemWindow(ItemWindow &citem);
+     ItemWindow();
+
+
     QWidget* getLayout();
     void verifyNumber();
 
 
+//    InfoWindow *info;
 
-
-
+    QPushButton *deleteButton;
     int getCEp() const;
     void setCEp(int newCEp);
     int getMaxEp() const;
@@ -35,13 +39,19 @@ public:
     void setNextRelease(const QDate &newNextRelease);
     const QTime &getNextTime() const;
     void setNextTime(const QTime &newNextTime);
-    const QString &getName() const;
+    const QString getName() const;
     void setName(const QString &newName);
 
     const QString &getTypePhotoName() const;
     const QString &getSpecialPhotoName() const;
+    Ui::ItemWindow *ui;
 
+signals:
+    void deleteAction(QString name);
 
+public slots:
+    void on_DeleteItem_released();
+    void on_SuplimentarInfo_clicked();
 
 private:
     int cEp= 0;
@@ -49,7 +59,7 @@ private:
     int unseenNumber = 0;
     QDate nextRelease;
     QTime nextTime;
-    Ui::ItemWindow *ui;
+
     QString name;
     QString typePhotoName;
     QString specialPhotoName;

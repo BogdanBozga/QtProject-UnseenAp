@@ -2,8 +2,10 @@
 #include "ui_mainwindow.h"
 #include "itemwindow.h"
 #include "itemappendwindow.h"
+#include "infowindow.h"
+#include "mainwindow.h"
 
-
+#include <QObject>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -13,6 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->widget_right->setVisible(false);
     QObject::connect(&rWindow,&ItemAppendWindow::save_done,this,&MainWindow::addItem);
     QObject::connect(&rWindow,&ItemAppendWindow::close_signel,this,&MainWindow::removeRWidget);
+
+//    QObject::connect(&)
+
     ui->verticalSlider->setVisible(false);
     readAllItems();
 }
@@ -34,19 +39,16 @@ void MainWindow::addRWidget()
 void MainWindow::addItem()
 {
     ItemWindow *item = rWindow.item;
+
+
+//    QObject::connect(item,&ItemWindow::deleteAction,this, &MainWindow::);
+//    QObject
+//    connect(item->ui->SuplimentarInfo, &QPushButton::clicked, this, &ItemWindow::on_SuplimentarInfo_clicked);
     items.append(item);
     ui->item_place->insertWidget(0,item->getLayout());
+
     update();
     writeItem(item);
-}
-
-
-void MainWindow::on_pushButton_clicked()
-{
-    if(!rightWindowActive){
-        rightWindowActive = true;
-        ui->widget_right->setVisible(true);
-    }
 }
 
 void MainWindow::removeRWidget(){
@@ -100,6 +102,24 @@ void MainWindow::writeItem(ItemWindow *item){
 
 }
 
+void MainWindow::addInfoToRWidget(QWidget *widget)
+{
+    ui->widget_right_info->layout()->addWidget(widget);
+    ui->widget_right_info->setVisible(false);
+}
+
+
+
+void MainWindow::updateWidget(QWidget *widget){
+//    ui->item_place->insertWidget(indexOfInsertion++,item.getLayout());
+//    ui->item_place->deleteLater();
+//    for(ItemWindow *item : items){
+        ui->item_place->removeWidget(widget);
+        qWarning() << "hmmm";
+        update();
+//        ui->item_place->insertWidget(indexOfInsertion++,item.getLayout());
+//    }
+}
 
 bool MainWindow::writeAllItems()
 {
@@ -146,8 +166,7 @@ bool MainWindow::readAllItems()
 
     QJsonObject loadData = loadDoc.object();
     if (loadData.contains("items") && loadData["items"].isArray()) {
-        qWarning() << "Read data";
-//        items.clear();
+        items.clear();
         QJsonArray itemArray = loadData["items"].toArray();
         QString name;
         QString typePhotoLocation;
@@ -158,6 +177,7 @@ bool MainWindow::readAllItems()
         QDate nextRelease;
         QTime time;
 
+        int indexOfInsertion=0;
         for (int levelIndex = 0; levelIndex < itemArray.size(); ++levelIndex) {
             QJsonObject itemData = itemArray[levelIndex].toObject();
 
@@ -194,8 +214,10 @@ bool MainWindow::readAllItems()
 
             ItemWindow item(name,typePhotoLocation,specialPhotoLocation,cEp,maxEp,nextRelease,time,nrUnseeEps);
             item.verifyNumber();
+//            connect(item.ui->SuplimentarInfo, &QPushButton::clicked, this, &ItemWindow::on_SuplimentarInfo_clicked);
+//            QObject::connect(item.deleteButton, &QPushButton::clicked,this, &MainWindow::deleteItem(item.getName()));
             items.append(&item);
-            ui->item_place->insertWidget(0,item.getLayout());
+            ui->item_place->insertWidget(indexOfInsertion++,item.getLayout());//we need to specify the insertion index in order to insert before the spacer
             update();
         }
 
@@ -205,3 +227,51 @@ bool MainWindow::readAllItems()
     return true;
 }
 
+void MainWindow::deleteItem(QString name)
+{
+
+    QMessageBox msgBox;
+    msgBox.setText("The document has been modified.");
+    msgBox.exec();
+
+
+
+    for(int i=0;i<items.length()-1;i++){
+        if(items[i]->getName()==name){
+            updateWidget(items[i]->getLayout());
+            items.removeAt(i);
+            break;
+        }
+    }
+    writeAllItems();
+}
+
+void MainWindow::deleteItem()
+{
+
+    QMessageBox msgBox;
+    msgBox.setText("The document has been modified.");
+    msgBox.exec();
+
+
+
+//    for(int i=0;i<items.length()-1;i++){
+//        if(items[i]->getName()==name){
+//            updateWidget(items[i]->getLayout());
+//            items.removeAt(i);
+//            break;
+//        }
+//    }
+//    writeAllItems();
+}
+void MainWindow::on_addButton_clicked()// the button for right window
+{
+    if(!rightWindowActive){
+        rightWindowActive = true;
+        ui->widget_right->setVisible(true);
+    }
+}
+
+void MainWindow::testSlot(){
+    qWarning()<<"please";
+}

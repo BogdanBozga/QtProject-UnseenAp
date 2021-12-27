@@ -9,19 +9,24 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    infowindow.cpp \
     itemappendwindow.cpp \
     itemwindow.cpp \
     main.cpp \
     mainwindow.cpp \
+    modsqbutton.cpp \
     scrollbar.cpp
 
 HEADERS += \
+    infowindow.h \
     itemappendwindow.h \
     itemwindow.h \
     mainwindow.h \
+    modsqbutton.h \
     scrollbar.h
 
 FORMS += \
+    infowindow.ui \
     itemappendwindow.ui \
     itemwindow.ui \
     mainwindow.ui
@@ -33,3 +38,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resourse_file.qrc
+
+DISTFILES +=

@@ -1,7 +1,6 @@
 ﻿#include "ui_itemappendwindow.h"
 #include "itemappendwindow.h"
 #include "mainwindow.h"
-//#include "clickablelabel.h"
 
 
 
@@ -70,19 +69,11 @@ void ItemAppendWindow::on_save_button_released()
     QDate date = ui->date->date();
     QTime time = ui->time->time();
     ItemWindow nitem(name,typeImegeLocation, specialImageLocation, cEp, mEp, date, time);
-
     nitem.verifyNumber();
     item = &nitem;
-//    MainWindow::items.append(nitem);
-
-//    MainWindow::items.append(ItemWindow(name,typeImegeLocation, specialImageLocation, cEp, mEp, date, time));
     emit save_done();
 }
 
-//QWidget* ItemAppendWindow::getItem()
-//{
-//    return item;
-//}
 
 void ItemAppendWindow::on_cancel_button_clicked()
 {
@@ -94,17 +85,18 @@ void ItemAppendWindow::on_pushButton_clicked()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                     "/home/",
                                                     tr("Images (*.png *.xpm *.jpg)"));
-    specialImageLocation = fileName;
 
-    if(CopyImage(fileName,imageResourseLocation)){
-        qWarning()<< fileName;
-        QVector <QString> imageName = fileName.split("/");
-        specialImageLocation = imageResourseLocation + imageName[imageName.length()-1];
-        qWarning()<< specialImageLocation;
-    }else{
-        qWarning()<< "Image copy fail";
+
+    if(fileName.size()){
+        specialImageLocation = fileName;
+
+        if(CopyImage(fileName,imageResourseLocation)){
+            QVector <QString> imageName = fileName.split("/");
+            specialImageLocation = imageResourseLocation + imageName[imageName.length()-1];
+        }else{
+            qWarning()<< "Image copy fail";
+        }
     }
-
 
     QPixmap image(specialImageLocation);
     specialImage = image.scaled(ui->photo_special->width(),ui->photo_special->height(),Qt::IgnoreAspectRatio);

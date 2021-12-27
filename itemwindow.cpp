@@ -1,4 +1,4 @@
-#include "itemwindow.h"
+﻿#include "itemwindow.h"
 #include "ui_itemwindow.h"
 #include <QString>
 #include <QMessageBox>
@@ -8,7 +8,7 @@ ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialP
     ui(new Ui::ItemWindow)
 {
 
-
+//    connect(ui->label_special_image, signal( clicked() ), this, slot(showSuplimetarInfo()));
     ui->setupUi(this);
 
     ui->textBrowser->setText(name);
@@ -28,6 +28,7 @@ ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialP
     ui->label_type_image->setPixmap(photoType.scaled(ui->label_type_image->width(),ui->label_type_image->height(),Qt::KeepAspectRatioByExpanding));
 
 
+
     this->name = name;
     this->cEp = cEp;
     this->maxEp = maxEp;
@@ -36,12 +37,18 @@ ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialP
     this->typePhotoName = typePhotoLocation;
     this->specialPhotoName = specialPhotoLocation;
     this->unseenNumber = nrUnseeEps;
-
+    verifyNumber();
     ui->lcdNumber->display(unseenNumber);
+    this->deleteButton = ui ->DeleteItem;
+
+//    connect(ui->DeleteItem, &QPushButton::released, this, &ItemWindow::on_DeleteItem_released);
+//    connect(ui->SuplimentarInfo, &QPushButton::clicked, this, &ItemWindow::on_SuplimentarInfo_clicked);
 }
 
-ItemWindow::ItemWindow(ItemWindow &citem)
+ItemWindow::ItemWindow(ItemWindow &citem) :ui(new Ui::ItemWindow)
 {
+
+    this->ui = citem.ui;
     this->name=citem.name;
     this->cEp=citem.cEp;
     this->maxEp=citem.maxEp;
@@ -50,6 +57,8 @@ ItemWindow::ItemWindow(ItemWindow &citem)
     this->typePhotoName=citem.typePhotoName;
     this->specialPhotoName=citem.specialPhotoName;
     this->unseenNumber=citem.unseenNumber;
+//        connect(ui->DeleteItem, &QPushButton::released, this, &ItemWindow::on_DeleteItem_released);
+//        connect(ui->SuplimentarInfo, &QPushButton::clicked, this, &ItemWindow::on_SuplimentarInfo_clicked);
 }
 
 
@@ -125,7 +134,7 @@ void ItemWindow::setNextTime(const QTime &newNextTime)
     nextTime = newNextTime;
 }
 
-const QString &ItemWindow::getName() const
+const QString ItemWindow::getName() const
 {
     return name;
 }
@@ -144,4 +153,42 @@ const QString &ItemWindow::getSpecialPhotoName() const
 {
     return specialPhotoName;
 }
+
+
+//void ItemWindow::on_Delete_clicked()
+//{
+//    QMessageBox msgBox;
+//    msgBox.setText("The document has been modified.");
+//    msgBox.exec();
+//    emit deleteAction(this->getName());
+//}
+
+
+//void ItemWindow::on_SuplimentarInfo_clicked()
+//{
+//    ////    InfoWindow *info = new  InfoWindow(this->getNextRelease().toString(),this->getNextTime().toString(),this->getUnseenNumber());
+//    ////    info->getWidget()->show();
+//    ////    QObject::connect(info,&InfoWindow::closeButoonPress,this,&ItemWindow::closeInfoWindow);
+//    ////    QObject::connect(info,&InfoWindow::deleteButtonPress,this,&ItemWindow::deleteItem);
+//    ////    QObject::connect(this,&ItemWindow::addInfo,)
+//    QMessageBox msgBox;
+//    msgBox.setText("The document has been modified.");
+//    msgBox.exec();
+//}
+
+
+void ItemWindow::on_DeleteItem_released()
+{
+    QMessageBox msgBox;
+    msgBox.setText("The document has been modified.");
+    msgBox.exec();
+    emit deleteAction(this->getName());
+}
+
+void ItemWindow::on_SuplimentarInfo_clicked(){
+    QMessageBox msgBox;
+    msgBox.setText("The document has been modified.");
+    msgBox.exec();
+}
+
 

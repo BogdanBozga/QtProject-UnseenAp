@@ -28,21 +28,32 @@ public:
     ~MainWindow();
     void addRWidget();
     void removeRWidget();
-    QList<ItemWindow*> items;
-    bool rightWindowActive;
     bool writeAllItems();
     bool readAllItems();
     void addItem();
     void writeItem(ItemWindow *item);
-    static void appendItem(ItemWindow item);
-//    static void addItem(ItemWindow item);
-    ItemAppendWindow rWindow;
-    Ui::MainWindow *ui;
-    //    void closeEvent (QCloseEvent *event) override;
-    void fuck(ItemWindow item);
-private slots:
-    void on_pushButton_clicked();
-private:
 
+    void updateWidget(QWidget *layout);
+
+
+
+    QList<ItemWindow*> items;
+
+
+
+
+public slots:
+    void addInfoToRWidget(QWidget *widget);
+    void deleteItem(QString name);
+    void deleteItem();
+    void testSlot();
+
+private slots:
+    void on_addButton_clicked();
+
+private:
+    bool rightWindowActive;
+    Ui::MainWindow *ui;
+    ItemAppendWindow rWindow;
 };
 #endif // MAINWINDOW_H
