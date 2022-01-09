@@ -34,6 +34,28 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_7">
     <item>
+     <widget class="QLabel" name="nameLabelInfo">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Name</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_11">
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -44,6 +66,9 @@
             <property name="text">
              <string>Next release data:</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
           <item>
@@ -51,12 +76,18 @@
             <property name="text">
              <string>10.11.2021</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="nextHourLaberInfo">
             <property name="text">
              <string>00:00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -68,6 +99,9 @@
            <widget class="QLabel" name="label_4">
             <property name="text">
              <string>Unseen episodes:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -82,7 +116,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="seenButton">
+           <widget class="QPushButton" name="seen_button">
             <property name="text">
              <string>Seen</string>
             </property>
@@ -104,16 +138,9 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_14">
       <item>
-       <widget class="QPushButton" name="closeButtonInfo">
+       <widget class="QPushButton" name="close_button_info">
         <property name="text">
          <string>Close</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="deleteButtonInfo">
-        <property name="text">
-         <string>Delete</string>
         </property>
        </widget>
       </item>

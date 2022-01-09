@@ -14,7 +14,6 @@ SOURCES += \
     itemwindow.cpp \
     main.cpp \
     mainwindow.cpp \
-    modsqbutton.cpp \
     scrollbar.cpp
 
 HEADERS += \
@@ -22,7 +21,6 @@ HEADERS += \
     itemappendwindow.h \
     itemwindow.h \
     mainwindow.h \
-    modsqbutton.h \
     scrollbar.h
 
 FORMS += \

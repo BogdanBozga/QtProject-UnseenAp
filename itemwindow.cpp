@@ -8,7 +8,6 @@ ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialP
     ui(new Ui::ItemWindow)
 {
 
-//    connect(ui->label_special_image, signal( clicked() ), this, slot(showSuplimetarInfo()));
     ui->setupUi(this);
 
     ui->textBrowser->setText(name);
@@ -41,11 +40,14 @@ ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialP
     ui->lcdNumber->display(unseenNumber);
     this->deleteButton = ui ->DeleteItem;
 
-//    connect(ui->DeleteItem, &QPushButton::released, this, &ItemWindow::on_DeleteItem_released);
-//    connect(ui->SuplimentarInfo, &QPushButton::clicked, this, &ItemWindow::on_SuplimentarInfo_clicked);
+
+//    connect(ui->DeleteItem, &QPushButton::released, this, &ItemWindow::on_Delete_released);
+//    connect(ui->SuplimentarInfo, &QPushButton::clicked, this, &ItemWindow::on_Suplimentar_clicked);
 }
 
-ItemWindow::ItemWindow(ItemWindow &citem) :ui(new Ui::ItemWindow)
+ItemWindow::ItemWindow(ItemWindow &citem) :
+    QWidget(citem.parentWidget()),
+    ui(new Ui::ItemWindow)
 {
 
     this->ui = citem.ui;
@@ -57,8 +59,6 @@ ItemWindow::ItemWindow(ItemWindow &citem) :ui(new Ui::ItemWindow)
     this->typePhotoName=citem.typePhotoName;
     this->specialPhotoName=citem.specialPhotoName;
     this->unseenNumber=citem.unseenNumber;
-//        connect(ui->DeleteItem, &QPushButton::released, this, &ItemWindow::on_DeleteItem_released);
-//        connect(ui->SuplimentarInfo, &QPushButton::clicked, this, &ItemWindow::on_SuplimentarInfo_clicked);
 }
 
 
@@ -81,7 +81,6 @@ void ItemWindow::verifyNumber()
             break;
         unseenNumber++;
     }
-//    ui->lcdNumber->display(unseenNumber);
 }
 
 int ItemWindow::getCEp() const
@@ -155,40 +154,25 @@ const QString &ItemWindow::getSpecialPhotoName() const
 }
 
 
-//void ItemWindow::on_Delete_clicked()
-//{
-//    QMessageBox msgBox;
-//    msgBox.setText("The document has been modified.");
-//    msgBox.exec();
-//    emit deleteAction(this->getName());
-//}
 
+void ItemWindow::on_SuplimentarInfo_clicked()
+{
+//    qWarning() << "s info";
 
-//void ItemWindow::on_SuplimentarInfo_clicked()
-//{
-//    ////    InfoWindow *info = new  InfoWindow(this->getNextRelease().toString(),this->getNextTime().toString(),this->getUnseenNumber());
-//    ////    info->getWidget()->show();
-//    ////    QObject::connect(info,&InfoWindow::closeButoonPress,this,&ItemWindow::closeInfoWindow);
-//    ////    QObject::connect(info,&InfoWindow::deleteButtonPress,this,&ItemWindow::deleteItem);
-//    ////    QObject::connect(this,&ItemWindow::addInfo,)
-//    QMessageBox msgBox;
-//    msgBox.setText("The document has been modified.");
-//    msgBox.exec();
-//}
+    emit suplimentarInfoAction(this->getName());
+}
 
 
 void ItemWindow::on_DeleteItem_released()
 {
-    QMessageBox msgBox;
-    msgBox.setText("The document has been modified.");
-    msgBox.exec();
+//    qWarning() << " d info";
     emit deleteAction(this->getName());
 }
 
-void ItemWindow::on_SuplimentarInfo_clicked(){
-    QMessageBox msgBox;
-    msgBox.setText("The document has been modified.");
-    msgBox.exec();
-}
+//void ItemWindow::on_SuplimentarInfo_clicked(){
+//    QMessageBox msgBox;
+//    msgBox.setText("The document has been modified.");
+//    msgBox.exec();
+//}
 
 

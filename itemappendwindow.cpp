@@ -68,9 +68,9 @@ void ItemAppendWindow::on_save_button_released()
     int mEp = ui->total_ep->value();
     QDate date = ui->date->date();
     QTime time = ui->time->time();
-    ItemWindow nitem(name,typeImegeLocation, specialImageLocation, cEp, mEp, date, time);
-    nitem.verifyNumber();
-    item = &nitem;
+    ItemWindow *nitem = new ItemWindow(name,typeImegeLocation, specialImageLocation, cEp, mEp, date, time);
+    nitem->verifyNumber();
+    item = nitem;
     emit save_done();
 }
 

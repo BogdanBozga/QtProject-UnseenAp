@@ -25,10 +25,8 @@ public:
     QWidget* getLayout();
     void verifyNumber();
 
-
-//    InfoWindow *info;
-
     QPushButton *deleteButton;
+
     int getCEp() const;
     void setCEp(int newCEp);
     int getMaxEp() const;
@@ -48,9 +46,15 @@ public:
 
 signals:
     void deleteAction(QString name);
+    void suplimentarInfoAction(QString name);
 
-public slots:
+//public slots:
+//    void on_DeleteItem_released();
+//    void on_SuplimentarInfo_clicked();
+
+private slots:
     void on_DeleteItem_released();
+
     void on_SuplimentarInfo_clicked();
 
 private:

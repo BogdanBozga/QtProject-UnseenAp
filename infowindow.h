@@ -15,7 +15,7 @@ class InfoWindow : public QWidget
 
 public:
 //    InfoWindow(ItemWindow *item);
-    InfoWindow(QString nextReleaseDate,QString nextReleaseTime,int unseenNumber);
+    InfoWindow(QString, QDate, QTime, int);
     ~InfoWindow();
     QWidget* getWidget();
 
@@ -25,11 +25,10 @@ signals:
     void deleteButtonPress();
 
 private slots:
-    void on_seenButton_clicked();
+//    void on_seenButton_clicked();
+    void on_close_button_info_clicked();
 
-    void on_closeButtonInfo_clicked();
-
-    void on_deleteButtonInfo_clicked();
+    void on_seen_button_clicked();
 
 private:
     Ui::InfoWindow *ui;

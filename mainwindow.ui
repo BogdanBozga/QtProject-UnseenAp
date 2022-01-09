@@ -85,16 +85,13 @@
      </widget>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="widget_right_box">
+     <layout class="QHBoxLayout" name="horizontalLayout_right">
       <item>
        <widget class="QWidget" name="widget_right" native="true">
         <layout class="QVBoxLayout" name="verticalLayout"/>
        </widget>
       </item>
      </layout>
-    </item>
-    <item>
-     <widget class="QWidget" name="widget_right_info" native="true"/>
     </item>
    </layout>
   </widget>

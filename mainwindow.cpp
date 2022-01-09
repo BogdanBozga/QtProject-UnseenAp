@@ -11,13 +11,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->widget_right->layout()->addWidget(rWindow.getWidget());
-    ui->widget_right->setVisible(false);
     QObject::connect(&rWindow,&ItemAppendWindow::save_done,this,&MainWindow::addItem);
     QObject::connect(&rWindow,&ItemAppendWindow::close_signel,this,&MainWindow::removeRWidget);
-
-//    QObject::connect(&)
-
+    rWindowWidget = rWindow.getWidget();
+    suplimentarInfoMode = false;
+    rightWindowActive = false;
     ui->verticalSlider->setVisible(false);
     readAllItems();
 }
@@ -27,23 +25,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::addRWidget()
-{
-    if(!rightWindowActive){
-        rightWindowActive = true;
-        ui->widget_right->setVisible(true);
-    }
-}
-
 
 void MainWindow::addItem()
 {
     ItemWindow *item = rWindow.item;
-
-
-//    QObject::connect(item,&ItemWindow::deleteAction,this, &MainWindow::);
-//    QObject
-//    connect(item->ui->SuplimentarInfo, &QPushButton::clicked, this, &ItemWindow::on_SuplimentarInfo_clicked);
+    connect(item,&ItemWindow::deleteAction,this,&MainWindow::deleteItem);
+    connect(item,&ItemWindow::suplimentarInfoAction,this,&MainWindow::on_suplimentarInfo);
     items.append(item);
     ui->item_place->insertWidget(0,item->getLayout());
 
@@ -102,23 +89,10 @@ void MainWindow::writeItem(ItemWindow *item){
 
 }
 
-void MainWindow::addInfoToRWidget(QWidget *widget)
-{
-    ui->widget_right_info->layout()->addWidget(widget);
-    ui->widget_right_info->setVisible(false);
-}
-
-
 
 void MainWindow::updateWidget(QWidget *widget){
-//    ui->item_place->insertWidget(indexOfInsertion++,item.getLayout());
-//    ui->item_place->deleteLater();
-//    for(ItemWindow *item : items){
         ui->item_place->removeWidget(widget);
-        qWarning() << "hmmm";
         update();
-//        ui->item_place->insertWidget(indexOfInsertion++,item.getLayout());
-//    }
 }
 
 bool MainWindow::writeAllItems()
@@ -212,12 +186,12 @@ bool MainWindow::readAllItems()
                 nrUnseeEps = itemData["nrUnseeEps"].toInt();
             }
 
-            ItemWindow item(name,typePhotoLocation,specialPhotoLocation,cEp,maxEp,nextRelease,time,nrUnseeEps);
-            item.verifyNumber();
-//            connect(item.ui->SuplimentarInfo, &QPushButton::clicked, this, &ItemWindow::on_SuplimentarInfo_clicked);
-//            QObject::connect(item.deleteButton, &QPushButton::clicked,this, &MainWindow::deleteItem(item.getName()));
-            items.append(&item);
-            ui->item_place->insertWidget(indexOfInsertion++,item.getLayout());//we need to specify the insertion index in order to insert before the spacer
+            ItemWindow *item = new ItemWindow(name,typePhotoLocation,specialPhotoLocation,cEp,maxEp,nextRelease,time,nrUnseeEps);
+            item->verifyNumber();
+            items.append(item);
+            connect(item,&ItemWindow::deleteAction,this,&MainWindow::deleteItem);
+            connect(item,&ItemWindow::suplimentarInfoAction,this,&MainWindow::on_suplimentarInfo);
+            ui->item_place->insertWidget(indexOfInsertion++,item->getLayout());//we need to specify the insertion index in order to insert before the spacer
             update();
         }
 
@@ -229,14 +203,8 @@ bool MainWindow::readAllItems()
 
 void MainWindow::deleteItem(QString name)
 {
-
-    QMessageBox msgBox;
-    msgBox.setText("The document has been modified.");
-    msgBox.exec();
-
-
-
-    for(int i=0;i<items.length()-1;i++){
+    qWarning() << name + " on delete item";
+    for(int i=0;i<items.length();i++){
         if(items[i]->getName()==name){
             updateWidget(items[i]->getLayout());
             items.removeAt(i);
@@ -244,34 +212,43 @@ void MainWindow::deleteItem(QString name)
         }
     }
     writeAllItems();
+    update();
 }
 
-void MainWindow::deleteItem()
-{
 
-    QMessageBox msgBox;
-    msgBox.setText("The document has been modified.");
-    msgBox.exec();
-
-
-
-//    for(int i=0;i<items.length()-1;i++){
-//        if(items[i]->getName()==name){
-//            updateWidget(items[i]->getLayout());
-//            items.removeAt(i);
-//            break;
-//        }
-//    }
-//    writeAllItems();
-}
 void MainWindow::on_addButton_clicked()// the button for right window
 {
     if(!rightWindowActive){
-        rightWindowActive = true;
+        if(suplimentarInfoMode){
+            ui->widget_right->layout()->removeWidget(infoWindowWidget);
+            ui->widget_right->repaint();
+            suplimentarInfoMode = false;
+        }
+        ui->widget_right->layout()->addWidget(rWindowWidget);
         ui->widget_right->setVisible(true);
+        rightWindowActive = true;
     }
 }
 
-void MainWindow::testSlot(){
-    qWarning()<<"please";
+void MainWindow::on_suplimentarInfo(QString name){
+            for(int i=0;i<items.length();i++){
+                if(items[i]->getName()==name){
+                    if(rightWindowActive){
+                         ui->widget_right->layout()->removeWidget(rWindowWidget);
+                         ui->widget_right->repaint();
+                         rightWindowActive = false;
+                    }
+                    infoWindowInstance = new InfoWindow(name, items[i]->getNextRelease(), items[i]->getNextTime(), items[i]->getUnseenNumber());
+                    infoWindowWidget = infoWindowInstance->getWidget();
+                    suplimentarInfoMode = true;
+
+                    ui->widget_right->layout()->addWidget(infoWindowWidget);
+                    ui->widget_right->setVisible(true);
+                    break;
+                }
+            }
+
 }
+
+
+
