@@ -4,7 +4,7 @@
 #include <QMessageBox>
 #include <QTextStream>
 
-ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialPhotoLocation,int cEp,int maxEp,QDate nextRelease,QTime time,int nrUnseeEps) :
+ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialPhotoLocation , QString link,int cEp,int maxEp, int repetitionPeriod,QDate nextRelease,QTime time,int nrUnseeEps) :
     ui(new Ui::ItemWindow)
 {
 
@@ -26,8 +26,8 @@ ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialP
     ui->label_special_image->setPixmap(photoSpecial.scaled(ui->label_special_image->width(),ui->label_special_image->height(),Qt::IgnoreAspectRatio));
     ui->label_type_image->setPixmap(photoType.scaled(ui->label_type_image->width(),ui->label_type_image->height(),Qt::KeepAspectRatioByExpanding));
 
-
-
+    this->link = link;
+    this->repertitionInterval = repetitionPeriod;
     this->name = name;
     this->cEp = cEp;
     this->maxEp = maxEp;
@@ -41,8 +41,14 @@ ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialP
     this->deleteButton = ui ->DeleteItem;
 
 
-//    connect(ui->DeleteItem, &QPushButton::released, this, &ItemWindow::on_Delete_released);
-//    connect(ui->SuplimentarInfo, &QPushButton::clicked, this, &ItemWindow::on_Suplimentar_clicked);
+
+        infoWindow = new InfoWindow(name,nextRelease, time, unseenNumber, getRemainingHours());
+        connect(infoWindow, &InfoWindow::closeButoonInfoPress, this, &ItemWindow::on_closeSuplimetarInfo);
+}
+
+
+void ItemWindow::on_closeSuplimetarInfo(){
+    emit closeSupminearInfoForMainWindow();
 }
 
 ItemWindow::ItemWindow(ItemWindow &citem) :
@@ -154,25 +160,24 @@ const QString &ItemWindow::getSpecialPhotoName() const
 }
 
 
-
 void ItemWindow::on_SuplimentarInfo_clicked()
 {
-//    qWarning() << "s info";
-
     emit suplimentarInfoAction(this->getName());
 }
 
 
 void ItemWindow::on_DeleteItem_released()
 {
-//    qWarning() << " d info";
     emit deleteAction(this->getName());
 }
 
-//void ItemWindow::on_SuplimentarInfo_clicked(){
-//    QMessageBox msgBox;
-//    msgBox.setText("The document has been modified.");
-//    msgBox.exec();
-//}
+int ItemWindow::getRemainingHours(){
+
+    return 100;
+}
 
 
+void ItemWindow::closeRWindowInfo(){
+    qWarning() << " from here where?";
+//    emit closeWindowAction();
+}

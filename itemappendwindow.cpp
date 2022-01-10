@@ -33,6 +33,7 @@ ItemAppendWindow::ItemAppendWindow(QWidget *parent) :
     ui->radioButton_anime->setChecked(true);
     ui->total_ep->setValue(12);
     ui->last_ep->setValue(1);
+    ui->repetitionPerioQSpinBox->setValue(7);
     QObject::connect(ui->radioButton_anime,&QRadioButton::toggled,this, &ItemAppendWindow::radioButtonChange);
 
 }
@@ -63,12 +64,15 @@ void ItemAppendWindow::radioButtonChange()
 
 void ItemAppendWindow::on_save_button_released()
 {
-    QString name = ui->name_text->text();
+    QString name = ui->name_QLineEdit->text();
+    QString link = ui->Link_QLineEdit->text();
     int cEp = ui->last_ep->value();
     int mEp = ui->total_ep->value();
+    int repetiotion = ui->repetitionPerioQSpinBox->value();
     QDate date = ui->date->date();
     QTime time = ui->time->time();
-    ItemWindow *nitem = new ItemWindow(name,typeImegeLocation, specialImageLocation, cEp, mEp, date, time);
+
+    ItemWindow *nitem = new ItemWindow(name, typeImegeLocation, specialImageLocation, link, cEp, mEp, repetiotion, date, time);
     nitem->verifyNumber();
     item = nitem;
     emit save_done();

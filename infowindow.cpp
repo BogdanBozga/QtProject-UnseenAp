@@ -1,47 +1,37 @@
+#include <QDate>
+#include <QTime>
 #include "infowindow.h"
 #include "ui_infowindow.h"
-
-//InfoWindow::InfoWindow(ItemWindow *nitem) :
-//    ui(new Ui::InfoWindow)
-//{
-//    ui->setupUi(this);
-//    this->item = nitem;
-
-//    QFont serifFont("Times", 25);
-
-//    ui->nextDateLabelInfo->setText(item->getNextRelease().toString());
-//    ui->nextDateLabelInfo->setFont(serifFont);
-//    ui->nextDateLabelInfo->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
-
-
-//    ui->nextHourLaberInfo->setText(item->getNextTime().toString());
-//    ui->nextHourLaberInfo->setFont(serifFont);getWidget
-//    ui->nextHourLaberInfo->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
-
-
-//    ui->unseenLCD->display(item->getUnseenNumber());
-//    ui->unseenLCD->setDigitCount(2);
-//}
-
-InfoWindow::InfoWindow(QString name, QDate nextReleaseDate,QTime nextReleaseTime,int unseenNumber):
+//QString name, QDate nextReleaseDate,QTime nextReleaseTime,int unseenNumber, int remainingHours/
+InfoWindow::InfoWindow(QString name, QDate nextReleaseDate,QTime nextReleaseTime,int unseenNumber, int remainingHours):
     ui(new Ui::InfoWindow)
 {
     ui->setupUi(this);
-    QFont serifFont("Times", 25);
+    QFont serifFont("Times", 20);
 //    item = new ItemWindow();
     ui->nameLabelInfo->setText(name);
+    ui->nameLabelInfo->setFont(serifFont);
+
     ui->nextDateLabelInfo->setText(nextReleaseDate.toString());
     ui->nextDateLabelInfo->setFont(serifFont);
     ui->nextDateLabelInfo->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
-
+    ui->nextDateLabelInfo->setFont(serifFont);
 
     ui->nextHourLaberInfo->setText(nextReleaseTime.toString());
     ui->nextHourLaberInfo->setFont(serifFont);
     ui->nextHourLaberInfo->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
-
+    ui->nextHourLaberInfo->setFont(serifFont);
 
     ui->unseenLCD->display(unseenNumber);
     ui->unseenLCD->setDigitCount(2);
+    ui->unseenLCD->setFont(serifFont);
+
+    ui->remainingHours->setFont(serifFont);
+
+    ui->label->setFont(serifFont);
+    ui->label_2->setFont(serifFont);
+    ui->label_4->setFont(serifFont);
+    ui->label_6->setFont(serifFont);
 }
 
 QWidget* InfoWindow::getWidget()
@@ -56,21 +46,20 @@ InfoWindow::~InfoWindow()
     delete ui;
 }
 
-//void InfoWindow::on_seenButton_clicked()
-//{
-//    item->setUnseenNumber(item->getUnseenNumber()-1);
-//    ui->unseenLCD->display(item->getUnseenNumber());
-//    update();
-//}
-
 
 void InfoWindow::on_close_button_info_clicked()
 {
-    qWarning() << " note here";
+    emit closeButoonInfoPress();
 }
 
 
 void InfoWindow::on_seen_button_clicked()
+{
+
+}
+
+
+void InfoWindow::on_openLink_button_clicked()
 {
 
 }

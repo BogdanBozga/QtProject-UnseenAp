@@ -2,7 +2,7 @@
 #define INFOWINDOW_H
 
 #include <QWidget>
-#include "itemwindow.h"
+//#include "itemwindow.h"
 
 
 namespace Ui {
@@ -15,20 +15,24 @@ class InfoWindow : public QWidget
 
 public:
 //    InfoWindow(ItemWindow *item);
-    InfoWindow(QString, QDate, QTime, int);
+    InfoWindow(QString, QDate, QTime, int, int);
     ~InfoWindow();
     QWidget* getWidget();
 
 
 signals:
-    void closeButoonPress();
-    void deleteButtonPress();
+    void closeButoonInfoPress();
+    void seenButtonInfoPress();
+    void linkButtonInfoPress();
+//    void closeWindowAction();
 
 private slots:
-//    void on_seenButton_clicked();
+
     void on_close_button_info_clicked();
 
     void on_seen_button_clicked();
+
+    void on_openLink_button_clicked();
 
 private:
     Ui::InfoWindow *ui;

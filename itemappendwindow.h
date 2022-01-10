@@ -52,10 +52,8 @@ private:
     QString imageResourseLocation = "/home/bozga/PersonalProjects/QtProjects/UnseenEp/Image/SpecialImage/";
 
     QString typeImegeLocation;
-    QString specialImageLocation;
+    QString specialImageLocation;   
 
-
-//    QWidget* getItem();
     QPixmap animeTypeImage;
     QPixmap mangaTypeImage;
     QPixmap specialImage;

@@ -16,7 +16,7 @@ class ItemWindow : public QWidget
     Q_OBJECT
 
 public:
-     ItemWindow(QString name, QString typePhotoName, QString specialPhotoName, int cEp,int maxEp,QDate nextRelease,QTime time,int nrUnseeEps=0);
+     ItemWindow(QString name, QString typePhotoName, QString specialPhotoName, QString link, int cEp,int maxEp, int repetition,QDate nextRelease,QTime time,int nrUnseeEps=0);
     ~ItemWindow();
      ItemWindow(ItemWindow &citem);
      ItemWindow();
@@ -26,6 +26,8 @@ public:
     void verifyNumber();
 
     QPushButton *deleteButton;
+
+    InfoWindow *infoWindow;
 
     int getCEp() const;
     void setCEp(int newCEp);
@@ -44,29 +46,36 @@ public:
     const QString &getSpecialPhotoName() const;
     Ui::ItemWindow *ui;
 
+    int getRemainingHours();
 signals:
     void deleteAction(QString name);
     void suplimentarInfoAction(QString name);
-
-//public slots:
-//    void on_DeleteItem_released();
-//    void on_SuplimentarInfo_clicked();
+    void closeWindowActionInfo();
+    void closeSupminearInfoForMainWindow();
 
 private slots:
-    void on_DeleteItem_released();
 
+    void on_DeleteItem_released();
     void on_SuplimentarInfo_clicked();
+    void on_closeSuplimetarInfo();
+
+
+
+public slots:
+    void closeRWindowInfo();
 
 private:
     int cEp= 0;
     int maxEp = 0;
     int unseenNumber = 0;
+    int repertitionInterval = 7; // in days
     QDate nextRelease;
     QTime nextTime;
 
     QString name;
     QString typePhotoName;
     QString specialPhotoName;
+    QString link;
 
 };
 

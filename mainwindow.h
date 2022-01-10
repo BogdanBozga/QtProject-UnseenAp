@@ -28,7 +28,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 //    void addRWidget();
-    void removeRWidget();
+
     bool writeAllItems();
     bool readAllItems();
     void addItem();
@@ -40,9 +40,13 @@ public:
 private slots:
     void on_addButton_clicked();
     void on_suplimentarInfo(QString);
+    void removeRWidget();
+    void closeInfoWindow();
 
 private:
     bool rightWindowActive;
+//    bool infoWindowActive;
+
     bool suplimentarInfoMode;
     Ui::MainWindow *ui;
     ItemAppendWindow rWindow;

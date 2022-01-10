@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(&rWindow,&ItemAppendWindow::save_done,this,&MainWindow::addItem);
     QObject::connect(&rWindow,&ItemAppendWindow::close_signel,this,&MainWindow::removeRWidget);
     rWindowWidget = rWindow.getWidget();
+    rWindowWidget->setVisible(false);
+    ui->widget_right->layout()->addWidget(rWindowWidget);
+    ui->widget_right->setVisible(false);
     suplimentarInfoMode = false;
     rightWindowActive = false;
     ui->verticalSlider->setVisible(false);
@@ -39,8 +42,13 @@ void MainWindow::addItem()
 }
 
 void MainWindow::removeRWidget(){
+//    infoWindowWidget->setVisible(false);
+    rWindowWidget->setVisible(false);
     ui->widget_right->setVisible(false);
+//    ui->widget_right->layout()->removeWidget(infoWindowWidget);
+//    ui->widget_right->layout()->removeWidget(rWindowWidget);
     rightWindowActive= false;
+    suplimentarInfoMode = false;
 }
 
 
@@ -143,11 +151,13 @@ bool MainWindow::readAllItems()
         items.clear();
         QJsonArray itemArray = loadData["items"].toArray();
         QString name;
+        QString link;
         QString typePhotoLocation;
         QString specialPhotoLocation;
         int cEp=0;
         int maxEp=0;
         int nrUnseeEps=0;
+        int remainingHours;
         QDate nextRelease;
         QTime time;
 
@@ -186,11 +196,17 @@ bool MainWindow::readAllItems()
                 nrUnseeEps = itemData["nrUnseeEps"].toInt();
             }
 
-            ItemWindow *item = new ItemWindow(name,typePhotoLocation,specialPhotoLocation,cEp,maxEp,nextRelease,time,nrUnseeEps);
+            ItemWindow *item = new ItemWindow(name,typePhotoLocation,specialPhotoLocation, link,cEp,maxEp, remainingHours,nextRelease,time,nrUnseeEps);
             item->verifyNumber();
             items.append(item);
-            connect(item,&ItemWindow::deleteAction,this,&MainWindow::deleteItem);
-            connect(item,&ItemWindow::suplimentarInfoAction,this,&MainWindow::on_suplimentarInfo);
+            connect(item, &ItemWindow::deleteAction, this, &MainWindow::deleteItem);
+            connect(item, &ItemWindow::suplimentarInfoAction, this, &MainWindow::on_suplimentarInfo);
+            connect(item->infoWindow, &InfoWindow::closeButoonInfoPress, this, &MainWindow::closeInfoWindow);
+//            connect(item, &ItemWindow::closeWindowAction, this, &MainWindow::closeInfoWindow);
+
+
+
+
             ui->item_place->insertWidget(indexOfInsertion++,item->getLayout());//we need to specify the insertion index in order to insert before the spacer
             update();
         }
@@ -200,6 +216,20 @@ bool MainWindow::readAllItems()
     }
     return true;
 }
+
+
+
+void MainWindow::closeInfoWindow(){
+//    qWarning() << "ok here is good";
+    //    infoWindowWidget->setVisible(false);
+        infoWindowWidget->setVisible(false);
+        ui->widget_right->setVisible(false);
+    //    ui->widget_right->layout()->removeWidget(infoWindowWidget);
+    //    ui->widget_right->layout()->removeWidget(rWindowWidget);
+        rightWindowActive= false;
+        suplimentarInfoMode = false;
+}
+
 
 void MainWindow::deleteItem(QString name)
 {
@@ -216,39 +246,99 @@ void MainWindow::deleteItem(QString name)
 }
 
 
+//void MainWindow::on_addButton_clicked()// the button for right window
+//{
+//    if(!rightWindowActive){
+//        if(infoWindowActive){
+//            ui->widget_right->layout()->removeWidget(infoWindowWidget);
+//            ui->widget_right->deleteLater();
+////           emit  ui->widget_right->destroyed();
+//            infoWindowActive = false;
+//        }
+//        ui->widget_right->layout()->addWidget(rWindowWidget);
+//        ui->widget_right->setVisible(true);
+//        rightWindowActive = true;
+//    }
+//}
+
 void MainWindow::on_addButton_clicked()// the button for right window
 {
     if(!rightWindowActive){
-        if(suplimentarInfoMode){
-            ui->widget_right->layout()->removeWidget(infoWindowWidget);
-            ui->widget_right->repaint();
-            suplimentarInfoMode = false;
-        }
-        ui->widget_right->layout()->addWidget(rWindowWidget);
+//        if(suplimentarInfoMode){
+//            infoWindowWidget->setVisible(false);
+//            ui->widget_right->layout()->removeWidget(infoWindowWidget);
+//            suplimentarInfoMode = false;
+//        }
+//        ui->widget_right->layout()->addWidget(rWindowWidget);
+        rWindowWidget->setVisible(true);
         ui->widget_right->setVisible(true);
         rightWindowActive = true;
+    }else if(suplimentarInfoMode){
+            infoWindowWidget->setVisible(false);
+            ui->widget_right->layout()->removeWidget(infoWindowWidget);
+
+            suplimentarInfoMode = false;
+            rWindowWidget->setVisible(true);
+            ui->widget_right->setVisible(true);
     }
 }
 
+//void MainWindow::on_suplimentarInfo(QString name){
+
+//            for(int i=0;i<items.length();i++){
+//                if(items[i]->getName()==name){
+//                    if(rightWindowActive){
+//                        ui->widget_right->layout()->removeWidget(rWindowWidget);
+//                         ui->widget_right->deleteLater();
+////                         emit ui->widget_right->destroyed();
+//                         rightWindowActive = false;
+//                    }
+//                    qWarning() << "ok aici";
+//                    if(infoWindowActive){
+//                        ui->widget_right->layout()->removeWidget(infoWindowWidget);
+//                        ui->widget_right->deleteLater();
+////                       emit  ui->widget_right->destroyed();
+//                    }
+//                    free(infoWindowWidget);
+//                    infoWindowInstance = new InfoWindow(name, items[i]->getNextRelease(), items[i]->getNextTime(), items[i]->getUnseenNumber(), items[i]->getRemainingHours());
+//                    connect(infoWindowInstance, &InfoWindow::closeButoonPress, this, &MainWindow::removeRWidget);
+//                    infoWindowWidget = infoWindowInstance->getWidget();
+//                    infoWindowActive = true;
+
+//                    ui->widget_right->layout()->addWidget(infoWindowWidget);
+//                    ui->widget_right->setVisible(true);
+//                    break;
+//                }
+//            }
+
+
+//}
 void MainWindow::on_suplimentarInfo(QString name){
             for(int i=0;i<items.length();i++){
                 if(items[i]->getName()==name){
-                    if(rightWindowActive){
-                         ui->widget_right->layout()->removeWidget(rWindowWidget);
-                         ui->widget_right->repaint();
-                         rightWindowActive = false;
-                    }
-                    infoWindowInstance = new InfoWindow(name, items[i]->getNextRelease(), items[i]->getNextTime(), items[i]->getUnseenNumber());
-                    infoWindowWidget = infoWindowInstance->getWidget();
-                    suplimentarInfoMode = true;
 
+                    if(rightWindowActive){
+                        if(suplimentarInfoMode){
+                            infoWindowWidget->setVisible(false);
+                            ui->widget_right->layout()->removeWidget(infoWindowWidget);
+
+                        }else{
+                            rWindowWidget->setVisible(false);
+                        }
+                    }
+
+//                    infoWindowInstance = new InfoWindow(name, items[i]->getNextRelease(), items[i]->getNextTime(), items[i]->getUnseenNumber(), items[i]->getRemainingHours());
+                    infoWindowWidget = items[i]->infoWindow->getWidget();
+                    infoWindowWidget->setVisible(true);
                     ui->widget_right->layout()->addWidget(infoWindowWidget);
                     ui->widget_right->setVisible(true);
+
+                    suplimentarInfoMode = true;
+                    rightWindowActive = true;
                     break;
                 }
             }
 
 }
-
 
 
