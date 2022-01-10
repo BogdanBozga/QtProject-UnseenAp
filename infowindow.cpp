@@ -66,6 +66,6 @@ void InfoWindow::on_seen_button_clicked()
 
 void InfoWindow::on_openLink_button_clicked()
 {
-
+    emit itemOpenUrl();
 }
 

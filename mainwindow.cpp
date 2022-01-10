@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QObject::connect(&rWindow,&ItemAppendWindow::save_done,this,&MainWindow::addItem);
     QObject::connect(&rWindow,&ItemAppendWindow::close_signel,this,&MainWindow::removeRWidget);
+
     rWindowWidget = rWindow.getWidget();
     rWindowWidget->setVisible(false);
     ui->widget_right->layout()->addWidget(rWindowWidget);
@@ -34,6 +35,10 @@ void MainWindow::addItem()
     ItemWindow *item = rWindow.item;
     connect(item,&ItemWindow::deleteAction,this,&MainWindow::deleteItem);
     connect(item,&ItemWindow::suplimentarInfoAction,this,&MainWindow::on_suplimentarInfo);
+    connect(item->infoWindow, &InfoWindow::closeButoonInfoPress, this, &MainWindow::closeInfoWindow);
+    connect(item, &ItemWindow::itemModifed, this, &MainWindow::writeAllItems);
+
+
     items.append(item);
     ui->item_place->insertWidget(0,item->getLayout());
 
@@ -121,6 +126,8 @@ bool MainWindow::writeAllItems()
         itemObject["nrTotalEps"] = item->getMaxEp();
         itemObject["nrCurentEp"] = item->getCEp();
         itemObject["nrUnseeEps"] = item->getUnseenNumber();
+        itemObject["link"] = item->getLink();
+        itemObject["repeatingPeriod"] = item->getRepeatingPeriod();
         itemsArray.append(itemObject);
     }
 
@@ -154,7 +161,7 @@ bool MainWindow::readAllItems()
         int cEp=0;
         int maxEp=0;
         int nrUnseeEps=0;
-        int remainingHours;
+        int repetitionPeriod = 7;
         QDate nextRelease;
         QTime time;
 
@@ -192,8 +199,14 @@ bool MainWindow::readAllItems()
             if (itemData.contains("nrUnseeEps") && itemData["nrUnseeEps"].isDouble()){
                 nrUnseeEps = itemData["nrUnseeEps"].toInt();
             }
+            if(itemData.contains("link") && itemData["link"].isString()){
+                link = itemData["link"].toString();
+            }
 
-            ItemWindow *item = new ItemWindow(name,typePhotoLocation,specialPhotoLocation, link,cEp,maxEp, remainingHours,nextRelease,time,nrUnseeEps);
+            if(itemData.contains("repeatingPeriod") && itemData["repeatingPeriod"].isDouble()){
+               repetitionPeriod = itemData["repeatingPeriod"].toInt();
+            }
+            ItemWindow *item = new ItemWindow(name,typePhotoLocation,specialPhotoLocation, link,cEp,maxEp, repetitionPeriod,nextRelease,time,nrUnseeEps);
             item->verifyNumber();
             items.append(item);
             connect(item, &ItemWindow::deleteAction, this, &MainWindow::deleteItem);

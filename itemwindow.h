@@ -44,6 +44,12 @@ public:
 
     const QString &getTypePhotoName() const;
     const QString &getSpecialPhotoName() const;
+
+
+
+    QString getLink();
+    int getRepeatingPeriod();
+
     Ui::ItemWindow *ui;
 
     int getRemainingHours();
@@ -55,7 +61,7 @@ signals:
     void itemModifed();
 
 private slots:
-
+    void openUrl();
     void on_DeleteItem_released();
     void on_SuplimentarInfo_clicked();
     void on_closeSuplimetarInfo();

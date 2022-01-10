@@ -3,6 +3,8 @@
 #include <QString>
 #include <QMessageBox>
 #include <QTextStream>
+#include <QDesktopServices>
+#include <QUrl>
 
 ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialPhotoLocation , QString link,int cEp,int maxEp, int repetitionPeriod,QDate nextRelease,QTime time,int nrUnseeEps) :
     ui(new Ui::ItemWindow)
@@ -42,10 +44,14 @@ ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialP
 
 
 
-        infoWindow = new InfoWindow(name,nextRelease, time, unseenNumber, getRemainingHours());
-        connect(infoWindow, &InfoWindow::closeButoonInfoPress, this, &ItemWindow::on_closeSuplimetarInfo);
-        connect(infoWindow,&InfoWindow::seenButtonInfoPress, this, &ItemWindow::on_seenButtonInfo);
+    infoWindow = new InfoWindow(name,nextRelease, time, unseenNumber, getRemainingHours());
+    connect(infoWindow, &InfoWindow::closeButoonInfoPress, this, &ItemWindow::on_closeSuplimetarInfo);
+    connect(infoWindow,&InfoWindow::seenButtonInfoPress, this, &ItemWindow::on_seenButtonInfo);
+    connect(infoWindow,&InfoWindow::itemOpenUrl, this, &ItemWindow::openUrl);
 
+}
+void ItemWindow::openUrl(){
+    QDesktopServices::openUrl(QUrl(link));
 }
 
 void ItemWindow::on_seenButtonInfo(){
@@ -80,6 +86,17 @@ ItemWindow::~ItemWindow()
     delete ui;
 }
 
+
+
+
+QString ItemWindow::getLink(){
+    return link;
+}
+
+int ItemWindow::getRepeatingPeriod(){
+    return repertitionInterval;
+}
+
 QWidget* ItemWindow::getLayout()
 {
     QWidget* layout = ui->widget_item;
@@ -89,7 +106,7 @@ QWidget* ItemWindow::getLayout()
 void ItemWindow::verifyNumber()
 {
     while(nextRelease < QDate::currentDate()){
-        nextRelease = nextRelease.addDays(7);
+        nextRelease = nextRelease.addDays(repertitionInterval);
         if(cEp+unseenNumber >= maxEp)
             break;
         unseenNumber++;

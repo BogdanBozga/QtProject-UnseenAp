@@ -24,6 +24,7 @@ signals:
     void closeButoonInfoPress();
     void seenButtonInfoPress();
     void linkButtonInfoPress();
+    void itemOpenUrl();
 //    void closeWindowAction();
 
 private slots:
