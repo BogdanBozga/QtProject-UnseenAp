@@ -44,8 +44,15 @@ ItemWindow::ItemWindow(QString name, QString typePhotoLocation, QString specialP
 
         infoWindow = new InfoWindow(name,nextRelease, time, unseenNumber, getRemainingHours());
         connect(infoWindow, &InfoWindow::closeButoonInfoPress, this, &ItemWindow::on_closeSuplimetarInfo);
+        connect(infoWindow,&InfoWindow::seenButtonInfoPress, this, &ItemWindow::on_seenButtonInfo);
+
 }
 
+void ItemWindow::on_seenButtonInfo(){
+    this->unseenNumber-=1;
+    ui->lcdNumber->display(unseenNumber);
+    emit itemModifed();
+}
 
 void ItemWindow::on_closeSuplimetarInfo(){
     emit closeSupminearInfoForMainWindow();

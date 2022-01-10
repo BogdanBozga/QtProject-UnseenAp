@@ -41,6 +41,7 @@ private slots:
     void on_addButton_clicked();
     void on_suplimentarInfo(QString);
     void removeRWidget();
+//    void unseenNumberDecreased();
     void closeInfoWindow();
 
 private:

@@ -3,7 +3,7 @@
 #include "infowindow.h"
 #include "ui_infowindow.h"
 //QString name, QDate nextReleaseDate,QTime nextReleaseTime,int unseenNumber, int remainingHours/
-InfoWindow::InfoWindow(QString name, QDate nextReleaseDate,QTime nextReleaseTime,int unseenNumber, int remainingHours):
+InfoWindow::InfoWindow(QString name, QDate nextReleaseDate,QTime nextReleaseTime,int unseenNumber_, int remainingHours):
     ui(new Ui::InfoWindow)
 {
     ui->setupUi(this);
@@ -22,7 +22,7 @@ InfoWindow::InfoWindow(QString name, QDate nextReleaseDate,QTime nextReleaseTime
     ui->nextHourLaberInfo->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
     ui->nextHourLaberInfo->setFont(serifFont);
 
-    ui->unseenLCD->display(unseenNumber);
+    ui->unseenLCD->display(unseenNumber_);
     ui->unseenLCD->setDigitCount(2);
     ui->unseenLCD->setFont(serifFont);
 
@@ -32,6 +32,7 @@ InfoWindow::InfoWindow(QString name, QDate nextReleaseDate,QTime nextReleaseTime
     ui->label_2->setFont(serifFont);
     ui->label_4->setFont(serifFont);
     ui->label_6->setFont(serifFont);
+    this->unseenNumber = unseenNumber_;
 }
 
 QWidget* InfoWindow::getWidget()
@@ -55,7 +56,11 @@ void InfoWindow::on_close_button_info_clicked()
 
 void InfoWindow::on_seen_button_clicked()
 {
-
+    if(unseenNumber > 0){
+        unseenNumber--;
+        ui->unseenLCD->display(unseenNumber);
+        emit seenButtonInfoPress();
+    }
 }
 
 

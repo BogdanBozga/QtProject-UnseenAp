@@ -52,13 +52,14 @@ signals:
     void suplimentarInfoAction(QString name);
     void closeWindowActionInfo();
     void closeSupminearInfoForMainWindow();
+    void itemModifed();
 
 private slots:
 
     void on_DeleteItem_released();
     void on_SuplimentarInfo_clicked();
     void on_closeSuplimetarInfo();
-
+    void on_seenButtonInfo();
 
 
 public slots:
@@ -76,6 +77,7 @@ private:
     QString typePhotoName;
     QString specialPhotoName;
     QString link;
+
 
 };
 

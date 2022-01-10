@@ -36,6 +36,7 @@ private slots:
 
 private:
     Ui::InfoWindow *ui;
+    int unseenNumber;
 //    ItemWindow item;
 };
 

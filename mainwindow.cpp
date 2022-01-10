@@ -42,11 +42,8 @@ void MainWindow::addItem()
 }
 
 void MainWindow::removeRWidget(){
-//    infoWindowWidget->setVisible(false);
     rWindowWidget->setVisible(false);
     ui->widget_right->setVisible(false);
-//    ui->widget_right->layout()->removeWidget(infoWindowWidget);
-//    ui->widget_right->layout()->removeWidget(rWindowWidget);
     rightWindowActive= false;
     suplimentarInfoMode = false;
 }
@@ -202,7 +199,7 @@ bool MainWindow::readAllItems()
             connect(item, &ItemWindow::deleteAction, this, &MainWindow::deleteItem);
             connect(item, &ItemWindow::suplimentarInfoAction, this, &MainWindow::on_suplimentarInfo);
             connect(item->infoWindow, &InfoWindow::closeButoonInfoPress, this, &MainWindow::closeInfoWindow);
-//            connect(item, &ItemWindow::closeWindowAction, this, &MainWindow::closeInfoWindow);
+            connect(item, &ItemWindow::itemModifed, this, &MainWindow::writeAllItems);
 
 
 
@@ -220,12 +217,8 @@ bool MainWindow::readAllItems()
 
 
 void MainWindow::closeInfoWindow(){
-//    qWarning() << "ok here is good";
-    //    infoWindowWidget->setVisible(false);
         infoWindowWidget->setVisible(false);
         ui->widget_right->setVisible(false);
-    //    ui->widget_right->layout()->removeWidget(infoWindowWidget);
-    //    ui->widget_right->layout()->removeWidget(rWindowWidget);
         rightWindowActive= false;
         suplimentarInfoMode = false;
 }
@@ -233,7 +226,7 @@ void MainWindow::closeInfoWindow(){
 
 void MainWindow::deleteItem(QString name)
 {
-    qWarning() << name + " on delete item";
+//    qWarning() << name + " on delete item";
     for(int i=0;i<items.length();i++){
         if(items[i]->getName()==name){
             updateWidget(items[i]->getLayout());
@@ -246,30 +239,9 @@ void MainWindow::deleteItem(QString name)
 }
 
 
-//void MainWindow::on_addButton_clicked()// the button for right window
-//{
-//    if(!rightWindowActive){
-//        if(infoWindowActive){
-//            ui->widget_right->layout()->removeWidget(infoWindowWidget);
-//            ui->widget_right->deleteLater();
-////           emit  ui->widget_right->destroyed();
-//            infoWindowActive = false;
-//        }
-//        ui->widget_right->layout()->addWidget(rWindowWidget);
-//        ui->widget_right->setVisible(true);
-//        rightWindowActive = true;
-//    }
-//}
-
 void MainWindow::on_addButton_clicked()// the button for right window
 {
     if(!rightWindowActive){
-//        if(suplimentarInfoMode){
-//            infoWindowWidget->setVisible(false);
-//            ui->widget_right->layout()->removeWidget(infoWindowWidget);
-//            suplimentarInfoMode = false;
-//        }
-//        ui->widget_right->layout()->addWidget(rWindowWidget);
         rWindowWidget->setVisible(true);
         ui->widget_right->setVisible(true);
         rightWindowActive = true;
@@ -283,36 +255,7 @@ void MainWindow::on_addButton_clicked()// the button for right window
     }
 }
 
-//void MainWindow::on_suplimentarInfo(QString name){
 
-//            for(int i=0;i<items.length();i++){
-//                if(items[i]->getName()==name){
-//                    if(rightWindowActive){
-//                        ui->widget_right->layout()->removeWidget(rWindowWidget);
-//                         ui->widget_right->deleteLater();
-////                         emit ui->widget_right->destroyed();
-//                         rightWindowActive = false;
-//                    }
-//                    qWarning() << "ok aici";
-//                    if(infoWindowActive){
-//                        ui->widget_right->layout()->removeWidget(infoWindowWidget);
-//                        ui->widget_right->deleteLater();
-////                       emit  ui->widget_right->destroyed();
-//                    }
-//                    free(infoWindowWidget);
-//                    infoWindowInstance = new InfoWindow(name, items[i]->getNextRelease(), items[i]->getNextTime(), items[i]->getUnseenNumber(), items[i]->getRemainingHours());
-//                    connect(infoWindowInstance, &InfoWindow::closeButoonPress, this, &MainWindow::removeRWidget);
-//                    infoWindowWidget = infoWindowInstance->getWidget();
-//                    infoWindowActive = true;
-
-//                    ui->widget_right->layout()->addWidget(infoWindowWidget);
-//                    ui->widget_right->setVisible(true);
-//                    break;
-//                }
-//            }
-
-
-//}
 void MainWindow::on_suplimentarInfo(QString name){
             for(int i=0;i<items.length();i++){
                 if(items[i]->getName()==name){
